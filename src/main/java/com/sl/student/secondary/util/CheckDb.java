@@ -1,4 +1,4 @@
-package com.sl.student.secondary.dao.util;
+package com.sl.student.secondary.util;
 
 import com.sl.student.primary.config.DatasourceConfig;
 
@@ -22,8 +22,8 @@ public class CheckDb {
         }
 
 
-        //DatasourceConfig dbConfig = new DatasourceConfig();
-        //dbConfig.connect("jdbc:mysql://localhost:3306/storedproducer","root","root");
+        DatasourceConfig dbConfig = new DatasourceConfig();
+        dbConfig.connect("jdbc:mysql://192.168.101.134:3306/storedproducer","testpp","testpp");
     }
 
 }

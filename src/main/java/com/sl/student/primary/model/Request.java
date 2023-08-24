@@ -6,5 +6,5 @@ import lombok.Data;
 import java.util.List;
 
 @Builder
-public record Request(String procedureName, List<KeyValuePair> keyValuePairs,String OutkeyValuePairs, String OutputParam,String ConnectionString) {
+public record Request(String procedureName, List<KeyValuePair> keyValuePairs,String outKeyValuePairs, String OutputParam, String providerType, String ConnectionString) {
 }

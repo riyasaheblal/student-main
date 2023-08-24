@@ -6,7 +6,7 @@ import com.sl.student.primary.model.Datatype;
 import com.sl.student.primary.model.KeyValuePair;
 import com.sl.student.primary.model.Request;
 
-import com.sl.student.secondary.dao.service.DbService;
+import com.sl.student.secondary.service.DbService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;
@@ -30,9 +30,9 @@ public class CommonDaoImpl implements CommonDao {
     @Override
     public String getProcData(Request request) throws JsonProcessingException {
 
-        Connection conn = dbService.getDbConnection(request.ConnectionString());
+        Connection conn = dbService.getDbConnection(request);
 
-        StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery(request.procedureName());
+        /*StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery(request.procedureName());
 
         List<KeyValuePair> listKeyValuePairs = request.keyValuePairs();
 
@@ -47,6 +47,7 @@ public class CommonDaoImpl implements CommonDao {
         List<Object> objectList = storedProcedure.getResultList();
         ObjectMapper objectMapper = new ObjectMapper();
 
-        return objectMapper.writeValueAsString(objectList);
+        return objectMapper.writeValueAsString(objectList);*/
+        return  null;
     }
 }

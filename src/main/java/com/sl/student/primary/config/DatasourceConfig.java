@@ -1,12 +1,13 @@
 package com.sl.student.primary.config;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+@Log4j2
 @Component
 public class DatasourceConfig {
 
@@ -17,8 +18,7 @@ public class DatasourceConfig {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Connected to Database server successfully.");
-
+        log.info("Connected to Database server successfully.");
         return conn;
     }
 }
