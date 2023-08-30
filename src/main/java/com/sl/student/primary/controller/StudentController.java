@@ -7,6 +7,8 @@ import com.sl.student.secondary.dao.CommonDaoImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+
 @RestController
 @RequestMapping(path = "/student")
 public class StudentController {
@@ -18,7 +20,7 @@ public class StudentController {
     }
 
     @PostMapping(value = "/getStudents")
-    public String getStudent(@RequestBody Request request) throws JsonProcessingException {
+    public String getStudent(@RequestBody Request request) throws JsonProcessingException, SQLException {
 
         return  studentService.getProcData(request);
     }
