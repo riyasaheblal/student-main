@@ -2,10 +2,12 @@ package com.sl.student.secondary.dao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sl.student.primary.model.KeyValuePair;
 import com.sl.student.primary.model.Request;
 import com.sl.student.secondary.service.DbService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.sql.*;
@@ -28,7 +30,17 @@ public class CommonDaoImpl implements CommonDao {
     public String getProcData(Request request) throws JsonProcessingException, SQLException {
 
         Connection conn = dbService.getDbConnection(request);
-        CallableStatement callableStatement = conn.prepareCall("{call " + request.procedureName() + "}");
+
+        CallableStatement callableStatement = conn.prepareCall(createSqlStatement(request));
+
+        List<KeyValuePair> paramKeyValues = request.keyValuePairs();
+        if (paramKeyValues!=null && paramKeyValues.size()>0){
+            int i = 1;
+            for (KeyValuePair keyValuePair: paramKeyValues) {
+                callableStatement.setObject(i,keyValuePair.value());
+                i++;
+            }
+        }
         ResultSet rs = callableStatement.executeQuery();
         List<Map<String, Object>> listMap =  extractData(rs);
 
@@ -36,7 +48,27 @@ public class CommonDaoImpl implements CommonDao {
         return objectMapper.writeValueAsString(listMap);
     }
 
-    private static List<Map<String, Object>> extractData(ResultSet resultSet) throws SQLException {
+    public static String createSqlStatement(Request request){
+
+        StringBuilder stringBuilder = new StringBuilder("call ");
+
+        List<KeyValuePair> paramKeyValues = request.keyValuePairs();
+
+        if (paramKeyValues==null || paramKeyValues.size()==0){
+            stringBuilder.append(request.procedureName()+"(");
+        }else {
+            stringBuilder.append(request.procedureName()+"(?");
+        }
+        if (paramKeyValues!=null && paramKeyValues.size()>1) {
+            for (KeyValuePair keyValuePair : paramKeyValues) {
+                stringBuilder.append(", ?");
+            }
+        }
+        stringBuilder.append(")");
+        return stringBuilder.toString();
+    }
+
+    private static List<Map<String, Object>> extractData(@NonNull ResultSet resultSet) throws SQLException {
         List<Map<String, Object>> result = new ArrayList<>();
         while (resultSet.next()) {
             Map<String, Object> row = new HashMap<>();
@@ -45,7 +77,6 @@ public class CommonDaoImpl implements CommonDao {
             }
             result.add(row);
         }
-        System.out.println(result);
         return result;
     }
 }
