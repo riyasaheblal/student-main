@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 @Builder
-public record KeyValuePair(String key, String value,String dataType) {
+public record KeyValuePair(String key, String value,Datatype dataType) {
 
 
 }

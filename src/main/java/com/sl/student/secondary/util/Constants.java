@@ -19,6 +19,10 @@ public class Constants {
     public static final String PROVIDER_URL_SQLSERVER = "jdbc:sqlserver:";
     public static final String PROVIDER_URL_ORACLE = "jdbc:oracle:thin:@";
 
+    public static final String POSTGRES_PROC_INITIAL_STRING="SELECT * FROM";
+    public static final String MYSQL_PROC_INITIAL_STRING="CALL";
+    public static final String DEFAULT_PROC_INITIAL_STRING="CALL";
+
 
 
 }

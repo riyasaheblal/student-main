@@ -1,17 +1,18 @@
 package com.sl.student.primary.model;
 
 public enum Datatype {
-    STR(String.class),
-    INT(Integer.class),
-    DOU(Double.class);
+    STR("String"),
+    INT("Integer"),
+    DOU("Double"),
+    BOOL("Boolean");
 
-    private Class<?> clazz;
+    private String dataType;
 
-    Datatype(Class<?> clazz) {
-        this.clazz = clazz;
+    Datatype(String dataType) {
+        this.dataType = dataType;
     }
 
-    public Class<?> getClazz() {
-        return clazz;
+    public String getString() {
+        return dataType;
     }
 }
