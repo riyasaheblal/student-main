@@ -1,7 +1,6 @@
 package com.sl.student.primary.config;
 
 import lombok.extern.log4j.Log4j2;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;

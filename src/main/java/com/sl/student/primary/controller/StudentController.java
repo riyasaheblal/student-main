@@ -2,9 +2,8 @@ package com.sl.student.primary.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sl.student.primary.model.Request;
-import com.sl.student.primary.model.StudentResponse;
-import com.sl.student.secondary.dao.CommonDaoImpl;
-import org.springframework.http.ResponseEntity;
+import com.sl.student.secondary.service.DbService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -13,15 +12,12 @@ import java.sql.SQLException;
 @RequestMapping(path = "/student")
 public class StudentController {
 
-    private final CommonDaoImpl studentService;
-
-    public StudentController(CommonDaoImpl studentService) {
-        this.studentService = studentService;
-    }
+    @Autowired
+    DbService dbService;
 
     @PostMapping(value = "/getStudents")
     public String getStudent(@RequestBody Request request) throws JsonProcessingException, SQLException {
 
-        return  studentService.getProcData(request);
+        return  dbService.getData(request);
     }
 }
