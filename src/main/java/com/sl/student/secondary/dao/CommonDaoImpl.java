@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sl.student.primary.model.Datatype;
 import com.sl.student.primary.model.KeyValuePair;
 import com.sl.student.primary.model.Request;
-import com.sl.student.secondary.service.DbService;
+import com.sl.student.secondary.helper.DbConnectionHelper;
 import com.sl.student.secondary.util.Constants;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -25,15 +25,12 @@ public class CommonDaoImpl implements CommonDao {
 
 
     @Autowired
-    DbService dbService;
-
-    @PersistenceContext
-    private EntityManager entityManager;
+    DbConnectionHelper dbConnectionHelper;
 
     @Override
     public String getProcData(Request request) throws JsonProcessingException, SQLException {
 
-        Connection conn = dbService.getDbConnection(request);
+        Connection conn = dbConnectionHelper.getDbConnection(request);
 
         CallableStatement callableStatement = conn.prepareCall(createSqlStatement(request));
 
